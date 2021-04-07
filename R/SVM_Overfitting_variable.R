@@ -17,6 +17,7 @@ SVM_Overfitting_variable = function(dataset, L = 5){
   library(e1071)
   nvariable =seq(1, length(dataset), by = L)
   moyenne = rep(0,length(nvariable))
+  i=1
   for (overfit in nvariable) {
 
 
@@ -57,12 +58,29 @@ SVM_Overfitting_variable = function(dataset, L = 5){
       y_pred = predict(classifier, newdata = test_fold[-length(training_fold)])
       cm = table(test_fold[, length(training_fold)], y_pred)
       accuracy = (cm[1,1] + cm[2,2]) / (cm[1,1] + cm[2,2] + cm[1,2] + cm[2,1])
-      return(accuracy)
+      sensibility = cm[1,1]/(cm[1,1]+cm[2,1])
+      specificity = cm[2,2]/(cm[2,2]+cm[1,2])
+      retour = c(accuracy,sensibility,specificity)
+      return(retour)
     })
-    moyenne[(overfit+10)/20] = mean(unlist(cv))
+    cv = unlist(cv)
+    for (j in 1:length(cv)) {
+      if (j%%3 == 1) {
+        accuracy[((j+2)/3)] = cv[i]
+      }else if (i%%3 == 2){sensibility[((j+1)/3)] = cv[j]}
+      else{specificity[(j/3)] = cv[j]}
+
+    }
+    if (i==1) {
+      acc[i] = mean(accuracy)
+      sen[i] = mean(sensibility)
+      spe[i] = mean(specificity)
+      retour = data.frame(acc ,sen,spe)
+    }else{retour = retour%>% add_row(acc = mean(accuracy),mean(sensibility),mean(specificity))}
     print(overfit)
+    i=i+1
   }
-  return(moyenne)
+  return(retour)
 }
 
 

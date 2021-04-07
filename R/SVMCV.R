@@ -1,5 +1,11 @@
-
-
+#' Title
+#'
+#' @param dataset
+#'
+#' @return
+#' @export
+#'
+#' @examples
 SVMCV = function(dataset){
   set.seed(323)
   library(caTools)
