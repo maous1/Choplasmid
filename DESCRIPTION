@@ -1,0 +1,12 @@
+Package: Choplasmid
+Type: Package
+Title: analyse sequence between chromosome and plasmid
+Version: 0.1.0
+Author:  M Bonjean
+Maintainer: M Bonjean <m.bonjean@student.uclouvain.be>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
